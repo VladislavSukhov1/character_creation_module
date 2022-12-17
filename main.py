@@ -22,11 +22,11 @@ class Character:
 
         value_attack = DEFAULT_ATTACK + randint(*self.RANGE_VALUE_ATTACK)
         return (f'{self.name} нанёс противнику урон, равный '
-                f'{5 + randint(5, 10)}')
+                f'{value_attack}')
 
 
-    def defense(self):
-        value_defense = DEFAULT_DEFENCE + randint(*self.RANGE_VALUE_DEFENCE)
+    def defence(self):
+        value_defence = DEFAULT_DEFENCE + randint(*self.RANGE_VALUE_DEFENCE)
         return (f'{self.name} блокировал {value_defence} ед. урона.')
 
 
@@ -65,63 +65,10 @@ class Healer(Character):
     SPECIAL_BUFF = DEFAULT_DEFENCE + 30
     SPECIAL_SKILL = 'Защита' 
 
+
+def start_training(character: Character) -> str:
     
-def attack(char_name: str, char_class: str) -> str:
-    if char_class == 'warrior':
-        return f'{char_name} нанёс урон противнику равный {5 + randint(3, 5)}'
-    if char_class == 'mage':
-        return f'{char_name} нанёс урон противнику равный {5 + randint(5, 10)}'
-    if char_class == 'healer':
-        return f'{char_name} нанёс урон противнику равный {5 + randint(-3,-1)}'
-    return (f'{char_name} не применил специальное умение')
-
-
-def defence(char_name, char_class):
-    if char_class == 'warrior':
-        return (f'{char_name} блокировал {10 + randint(5, 10)} урона')
-    if char_class == 'mage':
-        return (f'{char_name} блокировал {10 + randint(-2, 2)} урона')
-    if char_class == 'healer':
-        return (f'{char_name} блокировал {10 + randint(2, 5)} урона')
-    return (f'{char_name} не применил специальное умение')
-
-
-def special(char_name, char_class):
-    if char_class == 'warrior':
-        return (f'{char_name} применил '
-                f'специальное умение «Выносливость {80 + 25}»')
-    if char_class == 'mage':
-        return (f'{char_name} применил специальное умение «Атака {5 + 40}»')
-    if char_class == 'healer':
-        return (f'{char_name} применил специальное умение «Защита {10 + 30}»')
-    return (f'{char_name} не применил специальное умение')
-
-
-
-# def start_training(Character) -> str:
-    
-#     commands = {'attack' : attack, 'defence' : defence, 'special' : special}
-    
-#     print('Потренируйся управлять своими навыками.')
-#     print('Введи одну из команд: attack — чтобы атаковать '
-#           'противника, defence — чтобы блокировать атаку противника'
-#           'или special — чтобы использовать свою суперсилу.')
-#     print('Если не хочешь тренироваться, введи команду skip.')
-#     cmd = None
-#     while cmd != 'skip':
-#         cmd = input('Введи команду: ')
-#         if cmd == 'attack':
-#             print(attack(Character))
-#         if cmd == 'defence':
-#             print(defence(Character))
-#         if cmd == 'special':
-#             print(special(Character))
-#     return 'Тренировка окончена.'
-
-
-def start_training(char_name, char_class) -> str:
-    
-    commands = {'attack' : attack, 'defence' : defence, 'special' : special}
+    commands = {'attack' : character.attack(), 'defence' : character.defence(), 'special' : character.special()}
     
     print('Потренируйся управлять своими навыками.')
     print('Введи одну из команд: attack — чтобы атаковать '
@@ -130,10 +77,12 @@ def start_training(char_name, char_class) -> str:
     print('Если не хочешь тренироваться, введи команду skip.')
     cmd = None
     while cmd != 'skip':
-          cmd = input('Введи команду: ')
-          char_res: str = commands[cmd](char_name, char_class)
-          print(char_res)
-    return 'Тренировка окончена.'
+        cmd = input('Введи команду: ')
+        if cmd == "skip":          
+           return 'Тренировка окончена.'
+        char_res: str = commands[cmd]
+        print(char_res)
+
 
 
 def choice_char_class(char_name: str) -> Character:
@@ -167,8 +116,11 @@ if __name__ == '__main__':
           'Сейчас твоя выносливость — 80, атака — 5 и защита — 10.')
     print('Ты можешь выбрать один из трёх путей силы:')
     print('Воитель, Маг, Лекарь')
-    char_class: str = choice_char_class(char_name)
+    char_class: Character = choice_char_class(char_name)
     # print(start_training(char_name, char_class))
-    print(start_training(char_name, char_class))
+    print(start_training(char_class))
+#     mage = Mage('Кодослав')
+# print(mage)
+# print(mage.defence())
 
 main()
