@@ -106,6 +106,17 @@ def choice_char_class(char_name: str) -> Character:
     return char_class 
 
 
+def main():
+    print('Приветствую тебя искатель приключений!')
+    print('Прежде чем войти в игру')
+    char_name = input('Назови себя: ')
+    print(f'Здравствуй, {char_name}! '
+          'Сейчас твоя выносливость 80, атака 5 и защита 10.')
+    print('Но ты можешь выбрать один из трех путей силы.')
+    print('Воитель, Маг, Лекарь')
+    char_class = choice_char_class()
+    print(start_training(char_name, char_class))
+
 
 if __name__ == '__main__':
     run_screensaver()
